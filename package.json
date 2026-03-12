@@ -1,0 +1,17 @@
+{
+  "name": "troll-chat",
+  "version": "1.0.0",
+  "description": "A chat interface with a troll AI model",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "vercel build",
+    "deploy": "vercel deploy"
+  },
+  "keywords": ["chat", "troll", "ai", "groq"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/node": "^3.0.0"
+  }
+}
