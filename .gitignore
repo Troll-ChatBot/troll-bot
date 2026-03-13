@@ -8,3 +8,7 @@ yarn-error.log*
 .DS_Store
 *.swp
 .vscode/
+trollface.png
+trololo.png
+DEPLOYMENT_INSTRUCTIONS.md
+SECURITY_UPDATE_GUIDE.md

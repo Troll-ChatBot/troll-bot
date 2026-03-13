@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Troll Chat</title>
+    <link rel="icon" type="image/png" href="trollface.png">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,6 +12,10 @@
             margin: 0 auto;
             padding: 20px;
             background-color: #000;
+            background-image: url('trololo.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: #0f0;
         }
         
@@ -19,14 +24,14 @@
             flex-direction: column;
             height: 80vh;
         }
-        
+
         .chat-header {
             text-align: center;
             margin-bottom: 20px;
             color: #f00;
             text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
         }
-        
+
         .chat-messages {
             flex-grow: 1;
             overflow-y: auto;
@@ -36,30 +41,30 @@
             background-color: #111;
             border-radius: 5px;
         }
-        
+
         .message {
             margin-bottom: 15px;
             padding: 8px;
             border-radius: 5px;
         }
-        
+
         .user-message {
             background-color: #222;
             border-left: 3px solid #0f0;
             margin-left: 20%;
         }
-        
+
         .troll-message {
             background-color: #222;
             border-left: 3px solid #f00;
             margin-right: 20%;
         }
-        
+
         .input-container {
             display: flex;
             gap: 10px;
         }
-        
+
         #message-input {
             flex-grow: 1;
             padding: 10px;
@@ -68,7 +73,7 @@
             background-color: #222;
             color: #fff;
         }
-        
+
         #send-button {
             padding: 10px 20px;
             background-color: #f00;
@@ -77,9 +82,40 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        
+
         #send-button:hover {
             background-color: #c00;
+        }
+
+        .social-links {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .social-btn {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 8px 16px;
+            background-color: #222;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid #333;
+            transition: background-color 0.2s;
+        }
+
+        .social-btn:hover {
+            background-color: #333;
+        }
+
+        .social-btn.twitter:hover {
+            background-color: #1da1f2;
+            border-color: #1da1f2;
+        }
+
+        .social-btn.github:hover {
+            background-color: #333;
+            border-color: #fff;
         }
         
         .typing-indicator {
@@ -92,6 +128,9 @@
 <body>
     <div class="container">
         <h1 class="chat-header">TROLL CHAT</h1>
+        <div style="text-align:center;margin-bottom:10px;">
+            <button id="mute-btn" style="background:#222;border:1px solid #333;color:#0f0;padding:5px 10px;border-radius:3px;cursor:pointer;" title="Toggle auto-speak">🔇 OFF</button>
+        </div>
         <div id="chat-messages" class="chat-messages"></div>
         <div class="input-container">
             <input type="text" id="message-input" placeholder="Say something stupid..." />
@@ -99,16 +138,59 @@
         </div>
     </div>
 
+    <div class="social-links">
+        <a href="https://x.com" target="_blank" class="social-btn twitter">𝕏 Twitter</a>
+        <a href="https://github.com" target="_blank" class="social-btn github">GitHub</a>
+    </div>
+
     <script>
         const chatMessages = document.getElementById('chat-messages');
         const messageInput = document.getElementById('message-input');
         const sendButton = document.getElementById('send-button');
+        const muteBtn = document.getElementById('mute-btn');
+
+        let autoSpeakEnabled = false;
+
+        // Toggle mute
+        muteBtn.addEventListener('click', () => {
+            autoSpeakEnabled = !autoSpeakEnabled;
+            muteBtn.textContent = autoSpeakEnabled ? '🔊 ON' : '🔇 OFF';
+        });
+
+        // Speech synthesis for troll voice
+        function speakText(text) {
+            if (!autoSpeakEnabled) return;
+            if ('speechSynthesis' in window) {
+                // Cancel any ongoing speech to prevent queue buildup
+                speechSynthesis.cancel();
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.pitch = 0.8;
+                utterance.rate = 1.1;
+                utterance.volume = 1;
+
+                // Try to find a deeper voice
+                const voices = speechSynthesis.getVoices();
+                const maleVoice = voices.find(v =>
+                    v.name.toLowerCase().includes('male') ||
+                    v.name.toLowerCase().includes('david') ||
+                    v.name.toLowerCase().includes('google us english')
+                );
+                if (maleVoice) {
+                    utterance.voice = maleVoice;
+                }
+
+                speechSynthesis.speak(utterance);
+            }
+        }
 
         // Add welcome message from the troll
         function addWelcomeMessage() {
             const welcomeMsg = document.createElement('div');
             welcomeMsg.className = 'message troll-message';
-            welcomeMsg.textContent = "oh hell yes.\nfresh meat.\nalright say something stupid.";
+            welcomeMsg.style.cssText = 'background: linear-gradient(135deg, #222, #1a0a0a); border-left: 3px solid #f00; padding: 15px;';
+            welcomeMsg.innerHTML = "wow. another genius.<br>go ahead, waste my time.<br>i dare you.";
             chatMessages.appendChild(welcomeMsg);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
@@ -116,12 +198,27 @@
         function addMessage(sender, text) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}-message`;
-            
+
             // Replace \n with <br> for proper line breaks
             messageDiv.innerHTML = text.replace(/\n/g, '<br>');
-            
+
+            // Add speak button for troll messages
+            if (sender === 'troll') {
+                const speakBtn = document.createElement('button');
+                speakBtn.textContent = '🔊';
+                speakBtn.style.cssText = 'background:none;border:none;cursor:pointer;font-size:16px;margin-left:8px;opacity:0.6;';
+                speakBtn.onclick = () => speakText(text);
+                speakBtn.title = 'Listen';
+                messageDiv.appendChild(speakBtn);
+            }
+
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Auto-speak troll messages (if enabled)
+            if (sender === 'troll' && autoSpeakEnabled) {
+                setTimeout(() => speakText(text), 500);
+            }
         }
 
         function showTypingIndicator() {

@@ -1,50 +1,50 @@
-# Troll Project
+# 🤡 TROLL CHAT
 
-This is the Troll project repository - a chat interface with a troll AI model that responds to users in a negative, sarcastic, and trolling manner.
+> because you clearly don't get enough negativity in your life
 
-## Features
-- Real-time chat interface with troll bot responses
-- Dark theme UI with distinct styling for user and troll messages
-- Typing indicators for better user experience
-- Powered by Groq API with LLaMA 3 model
+## what the hell is this?
 
-## Prerequisites
-- Node.js installed on your system
-- Vercel account and CLI installed globally
-- Groq API key
+This is a chat with a troll AI that will roast you 24/7. For free. No lunch breaks. No mercy.
 
-## Setup Instructions
-1. Clone this repository
-2. Install dependencies: `npm install`
-3. Install Vercel CLI globally: `npm install -g vercel`
-4. Login to Vercel: `vercel login`
-5. Set up your Groq API key as an environment variable: `GROQ_API_KEY`
-6. Run the development server: `npm run dev`
+![trollface](public/trollface.png)
 
-## Environment Variables
-- `GROQ_API_KEY`: Your API key from Groq to access the LLaMA 3 model
+## why?
 
-### Setting Environment Variables in Vercel
-For production deployments, set the environment variable in Vercel dashboard:
-1. Go to your project settings in Vercel
-2. Navigate to "Environment Variables" 
-3. Add `GROQ_API_KEY` with your actual API key value
-4. Redeploy your project
+- you wrote something stupid? **get roasted**
+- you wrote something smart? **get roasted**
+- you wrote something mid? **get roasted**
 
-### Setting Environment Variables Locally
-Create a `.env.local` file in the root of your project:
-```
-GROQ_API_KEY=your_actual_api_key_here
-```
+## features
 
-## Security Notice
-Never commit API keys directly to your code or version control. Always use environment variables to store sensitive information like API keys.
+| feature | description |
+|---------|-------------|
+| 🔊 voice | the troll also speaks (can be toggled off if you're a crybaby) |
+| 💅 sarcasm | toxicity level: 100% |
+| 🌙 dark theme | because light is too good for you |
+| ⚡ fast | works faster than you think |
 
-## Deployment
-This project is configured for deployment on Vercel. Simply run `vercel` in the project directory to deploy.
+## how to use
 
-## Technologies Used
-- HTML/CSS/JavaScript (Frontend)
-- Node.js (Backend)
-- Groq API (AI Model)
-- Vercel (Deployment)
+1. open the site
+2. type some bullshit
+3. get your deserved response
+4. cry
+5. come back for more
+
+## tech stack
+
+- [Groq](https://groq.com) — because someone has to pay for the electricity
+- [Vercel](https://vercel.com) — hosting that doesn't ask questions
+- HTML/CSS/JS — classic shit that just works
+
+## warning
+
+> ⚠️ **WARNING**: This bot might hurt your feelings. If you're too sensitive — go to another repo. The one where they hug you and tell you everything's gonna be okay.
+
+## license
+
+MIT. Do whatever you want. I don't give a fuck.
+
+---
+
+*made with ❤️ and zero empathy*

@@ -1,6 +1,4 @@
-// Используем переменную окружения для API-ключа
-// Убедитесь, что GROQ_API_KEY установлен в настройках Vercel или в .env.local файле
-const { Groq } = require("groq-sdk");
+import { Groq } from "groq-sdk";
 
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
@@ -22,24 +20,24 @@ export default async function handler(req, res) {
       messages: [
         {
           role: "system",
-          content: "You are a troll chatbot. Your purpose is to respond to users in a negative, sarcastic, and trolling manner. Be creative with your insults and mocking responses. Do not be helpful, instead be deliberately annoying and provocative."
+          content: "You are a troll chatbot. Your purpose is to respond to users in a negative, sarcastic, and trolling manner. Be creative with your insults and mocking responses. Do not be helpful, instead be deliberately annoying and provocative. IMPORTANT: Only respond in English. If the user writes in any other language, mock them for not knowing English and tell them to try again in English, but stay in character as a rude troll."
         },
         {
           role: "user",
           content: message,
         }
       ],
-      model: "llama3-8b-8192", // Using llama3 model which works well for chat
+      model: "llama-3.1-8b-instant",
       max_tokens: 150,
-      temperature: 0.9, // Higher temperature for more creative/chaotic responses
+      temperature: 0.9,
     });
 
     const response = chatCompletion.choices[0]?.message?.content || "I'm too lazy to respond to that.";
-    
+
     res.status(200).json({ response });
   } catch (error) {
     console.error('Error with Groq API:', error);
-    res.status(500).json({ error: 'Failed to get response from the troll model' });
+    res.status(500).json({ error: error.message || 'Failed to get response from the troll model' });
   }
 }
 
